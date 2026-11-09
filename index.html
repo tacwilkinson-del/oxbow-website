@@ -64,7 +64,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* Hero */
 .hero{background:var(--band);color:var(--band-fg);padding-block:clamp(56px,8vw,104px) clamp(64px,9vw,112px);position:relative;overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:48px;align-items:center}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(28px,4vw,48px)}
+.hero-copy{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:end}
+.hero .reel{border-radius:18px}
+.hero .reel .play{width:88px;height:88px}
+.hero .reel .play svg{width:36px;height:36px}
 .hero h1{font-size:clamp(2.6rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-.03em}
 .hero h1 em{font-family:var(--f-serif);font-weight:500;font-style:italic;letter-spacing:-.01em;color:#F3A07C;position:relative}
 .hero h1 .w{display:inline-block;animation:settle 1.1s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * .16s + .1s)}
@@ -72,11 +76,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @keyframes settle{from{opacity:0;transform:translateY(.4em) rotate(var(--r,0deg));filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
 @keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 .hero .sub{font-size:clamp(1.3rem,2.5vw,2rem);line-height:1.22;font-weight:500;letter-spacing:-.01em;color:var(--band-fg);margin-top:22px;max-width:30ch;text-wrap:balance;animation:settle 1s cubic-bezier(.2,.7,.2,1) .75s both}
-.hero p.lede{color:var(--band-muted);margin-top:24px}
+.hero p.lede{color:var(--band-muted)}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
 .hero .who{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
 .pill{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--band-line);color:var(--band-muted);padding:7px 12px;border-radius:999px}
-.hero-mark{width:100%;max-width:360px;justify-self:end}
+.hero-mark{width:100%;max-width:170px;justify-self:start}
 .hero-mark .p{stroke-dasharray:1;stroke-dashoffset:0}
 .play .p{animation:draw 1.3s cubic-bezier(.55,0,.2,1) both}
 @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
@@ -89,9 +93,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* Work */
 .work{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
-.case{display:grid;gap:18px;align-content:start;min-width:0}
-.case.featured{grid-column:1/-1;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:start}
-.info{display:grid;gap:12px;align-content:start;min-width:0}
+.work{align-items:stretch}
+.case{display:flex;flex-direction:column;gap:18px;min-width:0}
+.case.featured{display:grid;grid-column:1/-1;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:start}
+.info{display:flex;flex-direction:column;gap:12px;min-width:0;flex:1}
+.info > *{margin:0}
+.info .more{margin-top:auto}
 .video{display:block;position:relative;aspect-ratio:16/9;max-width:100%;border-radius:16px;overflow:hidden;background-size:cover;background-position:center;color:#EDEFE9;text-decoration:none}
 .video > svg{position:absolute;inset:0;width:100%;height:100%}
 .video.has-thumb > svg{display:none}
@@ -183,13 +190,21 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--kingfisher);outl
 .fallback{grid-column:1/-1;background:#1A211D;border:1px dashed #4A5650;border-radius:12px;padding:16px;display:grid;gap:10px;font-size:.92rem;color:var(--band-muted)}
 .fallback pre{margin:0;white-space:pre-wrap;font:.85rem/1.5 var(--f-mono);color:#EDEFE9;max-height:200px;overflow:auto}
 
+.testimonial{margin:clamp(48px,6vw,72px) 0 0;padding-top:32px;border-top:1px solid var(--line);display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:start;max-width:900px}
+.testimonial > svg{width:72px;height:10px;color:var(--kingfisher);margin-top:20px}
+.testimonial blockquote{margin:0;font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:clamp(1.35rem,2.6vw,1.9rem);line-height:1.32;text-wrap:balance}
+.testimonial figcaption{margin-top:14px;font-family:var(--f-mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.band .testimonial{border-top-color:var(--band-line)}
+.band .testimonial figcaption{color:var(--band-muted)}
+@media (max-width:600px){.testimonial{grid-template-columns:minmax(0,1fr);gap:12px}.testimonial > svg{margin-top:0}}
 footer{background:var(--band);color:var(--band-muted);border-top:1px solid var(--band-line);padding-block:32px;font-size:.88rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
 
 @media (max-width:980px){
-  .hero .wrap,.contact .wrap,.case.featured{grid-template-columns:minmax(0,1fr)}
+  .contact .wrap,.case.featured{grid-template-columns:minmax(0,1fr)}
   .case.featured{gap:18px}
-  .hero-mark{justify-self:start;max-width:220px;order:-1}
+  .hero-copy{grid-template-columns:minmax(0,1fr)}
+  .hero-mark{max-width:130px}
   .principles,.steps ol{grid-template-columns:repeat(2,minmax(0,1fr))}
   .steps svg.line{display:none}
   .services,.aud,.offers{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -201,6 +216,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   .nav .btn{display:none}
 }
 @media (max-width:600px){
+  .hero .reel .play{width:60px;height:60px}
+  .hero .reel .play svg{width:26px;height:26px}
   .services,.aud,.offers,.principles,.steps ol,.work{grid-template-columns:minmax(0,1fr)}
   form{grid-template-columns:minmax(0,1fr)}
   .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -245,16 +262,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 
 <header class="hero" id="top">
   <div class="wrap">
-    <div>
-      <span class="eyebrow" style="color:#F3A07C">Communications studio</span>
-      <h1 style="margin-top:20px"><span class="w" style="--i:0">Making</span> <span class="w" style="--i:1">the</span> <span class="w" style="--i:2;--r:-5deg">complex</span> <em class="w" style="--i:3">simple</em></h1>
-      <p class="sub">Communications about the natural world that people understand and act on</p>
-      <p class="lede">Oxbow helps government agencies, NGOs and responsible brands turn complex environmental programmes into campaigns, reports and stories that change how people think and act.</p>
-      <div class="ctas">
-        <a class="btn btn-primary" href="#contact">Book a 30-minute call</a>
-        <a class="btn btn-ghost" href="#work">See the work</a>
-      </div>
-    </div>
     <div class="hero-mark play" id="heroMark">
       <svg viewBox="0 8 120 94" role="img" aria-label="The Oxbow mark: three collars under a meandering river line" fill="none" stroke-linecap="round" stroke-width="3">
         <path class="p" pathLength="1" stroke="#E8622F" d="M6 16 C24 12.5 42 12.5 60 16 C78 19.5 96 19.5 114 16"/>
@@ -262,6 +269,25 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <path class="p" pathLength="1" stroke="#EDEFE9" style="animation-delay:.73s" d="M34 29 V58 A26 26 0 0 0 86 58 V29"/>
         <path class="p" pathLength="1" stroke="#EDEFE9" style="animation-delay:1.01s" d="M46 29 V58 A14 14 0 0 0 74 58 V29"/>
       </svg>
+    </div>
+    <a class="video reel" href="https://vimeo.com/" data-vimeo="" target="_blank" rel="noopener" style="background-color:#26302B" aria-label="Play the Oxbow showreel">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M0 140 C 270 110, 530 110, 800 140 S 1330 170, 1600 140" stroke="#E8622F" stroke-width="5"/><g stroke="#3F4C45" stroke-width="3"><path d="M820 200 V520 A380 380 0 0 0 1580 520 V200"/><path d="M940 200 V520 A260 260 0 0 0 1460 520 V200"/><path d="M1060 200 V520 A140 140 0 0 0 1340 520 V200"/></g></svg>
+      <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+      <span class="vlabel">Showreel · [Vimeo video ID]</span>
+    </a>
+    <div class="hero-copy">
+      <div>
+      <span class="eyebrow" style="color:#F3A07C">Communications studio</span>
+      <h1 style="margin-top:20px"><span class="w" style="--i:0">Making</span> <span class="w" style="--i:1">the</span> <span class="w" style="--i:2;--r:-5deg">complex</span> <em class="w" style="--i:3">simple</em></h1>
+      <p class="sub">Communications about the natural world that people understand and act on</p>
+      </div>
+      <div>
+      <p class="lede">Oxbow is Tommy Wilkinson’s environmental communications studio. After 15 years as a managing director, senior communicator and award-winning photographer and film-maker, with an environmental degree behind me, I set up Oxbow to help complex organisations turn programmes of work into campaigns, reports and stories that change how people think and act.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#contact">Book a 30-minute call</a>
+        <a class="btn btn-ghost" href="#work">See the work</a>
+      </div>
+      </div>
     </div>
   </div>
 </header>
@@ -279,6 +305,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       <article><span class="tag">NGOs and charities</span><h3>Campaigns that move supporters</h3><p>Stories that win volunteers, members and funding, and impact reports that funders read to the end.</p></article>
       <article><span class="tag">Responsible brands</span><h3>Proof, not greenwash</h3><p>Communication that shows the evidence behind your actions and products, and is honest about what is still to do.</p></article>
     </div>
+    <figure class="testimonial">
+      <svg aria-hidden="true"><use href="#wave"/></svg>
+      <div>
+        <blockquote>“[Client testimonial: one or two sentences on what working with Oxbow changed.]”</blockquote>
+        <figcaption>[Name] · [Role], [Organisation]</figcaption>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -377,7 +410,118 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           </details>
         </div>
       </article>
+      <article class="case" data-project="4">
+        <a class="video" href="https://www.youtube.com/" data-yt="" target="_blank" rel="noopener" style="background-color:#1E5B66" aria-label="Play the project film on YouTube">
+          <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke-linecap="round" stroke-width="1.6" stroke="#86BCC6"><path d="M0 60 C 70 50, 130 50, 200 60 S 330 70, 400 60" stroke="#E8622F" stroke-width="2.6"/><path d="M60 80 V130 A70 70 0 0 0 200 130 V80"/><path d="M100 80 V130 A30 30 0 0 0 160 130 V80"/></svg>
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+          <span class="vlabel">Film · [YouTube link]</span>
+        </a>
+        <div class="info">
+          <span class="meta">[Sector] · [Year]</span>
+          <h3>[Project name]</h3>
+          <p class="clients">[Client]</p>
+          <p>[One-line summary: what changed, with a real figure.]</p>
+          <details class="more">
+            <summary>Project details</summary>
+            <div class="more-body">
+              <div><h4>The challenge</h4><p>[What the client needed to change, and who they needed to reach.]</p></div>
+              <div><h4>What we did</h4><p>[The idea, the channels and what we made.]</p></div>
+              <div class="stats">
+                <div class="stat"><b>[__]</b><small>[Result 1]</small></div>
+                <div class="stat"><b>[__]</b><small>[Result 2]</small></div>
+                <div class="stat"><b>[__]</b><small>[Result 3]</small></div>
+              </div>
+              <p class="credits">[Client] · [Services]</p>
+            </div>
+          </details>
+        </div>
+      </article>
+      <article class="case" data-project="5">
+        <a class="video" href="https://www.youtube.com/" data-yt="" target="_blank" rel="noopener" style="background-color:#B7AD94" aria-label="Play the project film on YouTube">
+          <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke-linecap="round" stroke-width="1.6" stroke="#1C2420" stroke-opacity=".3"><path d="M-20 60 C 80 140, 180 150, 240 100 S 360 30, 420 90"/><path d="M-20 80 C 80 160, 180 170, 240 120 S 360 50, 420 110"/><path d="M-20 100 C 80 180, 180 190, 240 140 S 360 70, 420 130"/></svg>
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+          <span class="vlabel">Film · [YouTube link]</span>
+        </a>
+        <div class="info">
+          <span class="meta">[Sector] · [Year]</span>
+          <h3>[Project name]</h3>
+          <p class="clients">[Client]</p>
+          <p>[One-line summary: what changed, with a real figure.]</p>
+          <details class="more">
+            <summary>Project details</summary>
+            <div class="more-body">
+              <div><h4>The challenge</h4><p>[What the client needed to change, and who they needed to reach.]</p></div>
+              <div><h4>What we did</h4><p>[The idea, the channels and what we made.]</p></div>
+              <div class="stats">
+                <div class="stat"><b>[__]</b><small>[Result 1]</small></div>
+                <div class="stat"><b>[__]</b><small>[Result 2]</small></div>
+                <div class="stat"><b>[__]</b><small>[Result 3]</small></div>
+              </div>
+              <p class="credits">[Client] · [Services]</p>
+            </div>
+          </details>
+        </div>
+      </article>
+      <article class="case" data-project="6">
+        <a class="video" href="https://www.youtube.com/" data-yt="" target="_blank" rel="noopener" style="background-color:#1C2420" aria-label="Play the project film on YouTube">
+          <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke-linecap="round" stroke-width="1.6" stroke="#8C9A5B" stroke-opacity=".6"><path d="M0 40 C 70 30, 130 30, 200 40 S 330 50, 400 40" stroke="#E8622F" stroke-opacity="1" stroke-width="2.6"/><path d="M180 60 V110 A100 100 0 0 0 380 110 V60"/><path d="M220 60 V110 A60 60 0 0 0 340 110 V60"/></svg>
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+          <span class="vlabel">Film · [YouTube link]</span>
+        </a>
+        <div class="info">
+          <span class="meta">[Sector] · [Year]</span>
+          <h3>[Project name]</h3>
+          <p class="clients">[Client]</p>
+          <p>[One-line summary: what changed, with a real figure.]</p>
+          <details class="more">
+            <summary>Project details</summary>
+            <div class="more-body">
+              <div><h4>The challenge</h4><p>[What the client needed to change, and who they needed to reach.]</p></div>
+              <div><h4>What we did</h4><p>[The idea, the channels and what we made.]</p></div>
+              <div class="stats">
+                <div class="stat"><b>[__]</b><small>[Result 1]</small></div>
+                <div class="stat"><b>[__]</b><small>[Result 2]</small></div>
+                <div class="stat"><b>[__]</b><small>[Result 3]</small></div>
+              </div>
+              <p class="credits">[Client] · [Services]</p>
+            </div>
+          </details>
+        </div>
+      </article>
+      <article class="case" data-project="7">
+        <a class="video" href="https://www.youtube.com/" data-yt="" target="_blank" rel="noopener" style="background-color:#8C9A5B" aria-label="Play the project film on YouTube">
+          <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke-linecap="round" stroke-width="1.6" stroke="#1C2420" stroke-opacity=".35"><path d="M20 30 V110 A80 80 0 0 0 180 110 V30"/><path d="M50 30 V110 A50 50 0 0 0 150 110 V30"/><path d="M80 30 V110 A20 20 0 0 0 120 110 V30"/></svg>
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+          <span class="vlabel">Film · [YouTube link]</span>
+        </a>
+        <div class="info">
+          <span class="meta">[Sector] · [Year]</span>
+          <h3>[Project name]</h3>
+          <p class="clients">[Client]</p>
+          <p>[One-line summary: what changed, with a real figure.]</p>
+          <details class="more">
+            <summary>Project details</summary>
+            <div class="more-body">
+              <div><h4>The challenge</h4><p>[What the client needed to change, and who they needed to reach.]</p></div>
+              <div><h4>What we did</h4><p>[The idea, the channels and what we made.]</p></div>
+              <div class="stats">
+                <div class="stat"><b>[__]</b><small>[Result 1]</small></div>
+                <div class="stat"><b>[__]</b><small>[Result 2]</small></div>
+                <div class="stat"><b>[__]</b><small>[Result 3]</small></div>
+              </div>
+              <p class="credits">[Client] · [Services]</p>
+            </div>
+          </details>
+        </div>
+      </article>
     </div>
+    <figure class="testimonial">
+      <svg aria-hidden="true"><use href="#wave"/></svg>
+      <div>
+        <blockquote>“[Client testimonial: one or two sentences on what working with Oxbow changed.]”</blockquote>
+        <figcaption>[Name] · [Role], [Organisation]</figcaption>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -385,7 +529,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   <div class="wrap">
     <div class="head">
       <span class="eyebrow">What we make</span>
-      <h2>From strategy to the riverbank</h2>
+      <h2>From strategy development to digital campaigns</h2>
+      <p class="lede">We listen first, then create.</p>
     </div>
     <div class="services">
       <div class="svc"><h3>Campaigns</h3><p>Public information and behaviour-change campaigns, from strategy to street.</p></div>
@@ -395,6 +540,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       <div class="svc"><h3>Signage and interpretation</h3><p>Panels, trails and wayfinding for parks, reserves and rivers.</p></div>
       <div class="svc"><h3>Digital</h3><p>Websites, interactive tools and social content that people use and share.</p></div>
     </div>
+    <figure class="testimonial">
+      <svg aria-hidden="true"><use href="#wave"/></svg>
+      <div>
+        <blockquote>“[Client testimonial: one or two sentences on what working with Oxbow changed.]”</blockquote>
+        <figcaption>[Name] · [Role], [Organisation]</figcaption>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -409,6 +561,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       <div class="pr" style="background:#B7AD94;color:#1C2420"><svg style="color:#1C2420" aria-hidden="true"><use href="#wave"/></svg><h3>Human scale</h3><p>We tell stories of real places and the people who care for them.</p></div>
       <div class="pr" style="background:#E8622F;color:#1C2420"><svg style="color:#1C2420" aria-hidden="true"><use href="#wave"/></svg><h3>Honest hope</h3><p>We show what works without hiding what does not.</p></div>
     </div>
+    <figure class="testimonial">
+      <svg aria-hidden="true"><use href="#wave"/></svg>
+      <div>
+        <blockquote>“[Client testimonial: one or two sentences on what working with Oxbow changed.]”</blockquote>
+        <figcaption>[Name] · [Role], [Organisation]</figcaption>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -427,6 +586,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <li><span class="n">04</span><h3>Measure</h3><p>We track what changed and report it honestly, including what did not work.</p></li>
       </ol>
     </div>
+    <figure class="testimonial">
+      <svg aria-hidden="true"><use href="#wave"/></svg>
+      <div>
+        <blockquote>“[Client testimonial: one or two sentences on what working with Oxbow changed.]”</blockquote>
+        <figcaption>[Name] · [Role], [Organisation]</figcaption>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -468,6 +634,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <a class="btn btn-ghost" href="#contact" data-offer="Ongoing partner">Talk about a retainer</a>
       </div>
     </div>
+    <figure class="testimonial">
+      <svg aria-hidden="true"><use href="#wave"/></svg>
+      <div>
+        <blockquote>“[Client testimonial: one or two sentences on what working with Oxbow changed.]”</blockquote>
+        <figcaption>[Name] · [Role], [Organisation]</figcaption>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -480,6 +653,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       <details><summary>How do you measure results?</summary><p>We agree the measures at the start, such as reach, views, cost per action or sign-ups, and track them through the project. You get a results report at the end, including what did not work.</p></details>
       <details><summary>Do you work with public-sector procurement?</summary><p>Yes. Tell us which framework or process you use and we will shape the proposal to fit it.</p></details>
     </div>
+    <figure class="testimonial">
+      <svg aria-hidden="true"><use href="#wave"/></svg>
+      <div>
+        <blockquote>“[Client testimonial: one or two sentences on what working with Oxbow changed.]”</blockquote>
+        <figcaption>[Name] · [Role], [Organisation]</figcaption>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -556,7 +736,23 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 
   /* Videos: on your own website the film plays in the page; on preview pages that block embeds, the link opens YouTube instead. */
   var canEmbed=!/claude/i.test(location.hostname);
-  document.querySelectorAll('.video').forEach(function(v){
+  document.querySelectorAll('.video[data-vimeo]').forEach(function(v){
+    var id=(v.getAttribute('data-vimeo')||'').trim();
+    if(!id){v.addEventListener('click',function(e){e.preventDefault();var l=v.querySelector('.vlabel');if(l){l.textContent='Showreel coming soon';}});return;}
+    v.href='https://vimeo.com/'+encodeURIComponent(id);
+    if(!canEmbed){return;}
+    v.addEventListener('click',function(e){
+      e.preventDefault();
+      var f=document.createElement('iframe');
+      f.src='https://player.vimeo.com/video/'+encodeURIComponent(id)+'?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+      f.title='Oxbow showreel';
+      f.allow='autoplay; fullscreen; picture-in-picture';
+      f.allowFullscreen=true;
+      v.querySelectorAll('.play,.vlabel').forEach(function(n){n.remove();});
+      v.appendChild(f);
+    },{once:true});
+  });
+  document.querySelectorAll('.video[data-yt]').forEach(function(v){
     var id=(v.getAttribute('data-yt')||'').trim();
     if(!id){v.addEventListener('click',function(e){e.preventDefault();var l=v.querySelector('.vlabel');if(l){l.textContent='Video coming soon';}});return;}
     v.href='https://www.youtube.com/watch?v='+encodeURIComponent(id);
