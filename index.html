@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Oxbow Studio</title>
 <meta name="description" content="Oxbow is a communications studio about the natural world, for government agencies, NGOs and responsible brands.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -66,7 +69,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* Hero */
 .hero{background:var(--band);color:var(--band-fg);padding-block:clamp(56px,8vw,104px) clamp(64px,9vw,112px);position:relative;overflow:hidden}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(28px,4vw,48px)}
-.hero-copy{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:end}
+.hero-copy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(28px,5vw,64px);align-items:end}
 .hero .reel{border-radius:18px}
 .hero .reel .play{width:88px;height:88px}
 .hero .reel .play svg{width:36px;height:36px}
@@ -78,6 +81,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 .hero .sub{font-size:clamp(1.3rem,2.5vw,2rem);line-height:1.22;font-weight:500;letter-spacing:-.01em;color:var(--band-fg);margin-top:22px;max-width:30ch;text-wrap:balance;animation:settle 1s cubic-bezier(.2,.7,.2,1) .75s both}
 .hero p.lede{color:var(--band-muted)}
+.intro{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr);gap:clamp(18px,2.5vw,28px);align-items:start}
+.portrait{margin:0;display:grid;gap:8px}
+.portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;display:block}
+.portrait figcaption{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;color:var(--band-muted)}
+@media (max-width:600px){.intro{grid-template-columns:minmax(0,1fr)}.portrait{max-width:220px}}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
 .hero .who{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
 .pill{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--band-line);color:var(--band-muted);padding:7px 12px;border-radius:999px}
@@ -100,6 +108,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .info{display:flex;flex-direction:column;gap:12px;min-width:0;flex:1}
 .info > *{margin:0}
 .info .more{margin-top:auto}
+.info .kpis{margin-top:auto}
+.info .kpis + .more{margin-top:0}
 .video{display:block;position:relative;aspect-ratio:16/9;max-width:100%;border-radius:16px;overflow:hidden;background-size:cover;background-position:center;color:#EDEFE9;text-decoration:none}
 .video > svg{position:absolute;inset:0;width:100%;height:100%}
 .video.has-thumb > svg{display:none}
@@ -111,6 +121,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .case .meta{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .case h3{font-size:clamp(1.3rem,2.2vw,1.8rem)}
 .case p{color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi{background:var(--bg);border-radius:12px;padding:12px 14px;display:grid;gap:2px;align-content:start;min-width:0}
+.kpi b{font-size:clamp(1.25rem,2.2vw,1.75rem);font-weight:600;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.kpi small{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;color:var(--muted)}
 .more{border-top:1px solid var(--line);margin-top:4px}
 .more summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding-block:14px;font-weight:600;color:var(--fg)}
 .more summary::-webkit-details-marker{display:none}
@@ -302,12 +316,18 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       <h1 style="margin-top:20px"><span class="w" style="--i:0">Making</span> <span class="w" style="--i:1">the</span> <span class="w" style="--i:2;--r:-5deg">complex</span> <em class="w" style="--i:3">simple</em></h1>
       <p class="sub">Communications about the natural world that people understand and act on</p>
       </div>
-      <div>
-      <p class="lede">Oxbow is Tommy Wilkinson’s environmental communications studio. After 15 years as a managing director, senior communicator and award-winning photographer and film-maker, with an environmental degree behind me, I set up Oxbow to help complex organisations turn programmes of work into campaigns, reports and stories that change how people think and act.</p>
+      <div class="intro">
+        <figure class="portrait">
+          <img src="media/tommy-portrait.jpg" alt="Tommy Wilkinson smiling in woodland, black and white portrait">
+          <figcaption>Photo: Adela Carter</figcaption>
+        </figure>
+        <div class="intro-copy">
+      <p class="lede">I’m Tommy Wilkinson, and Oxbow is my environmental communications studio. After 15 years as a managing director, senior communicator and award-winning photographer and film-maker, with an environmental degree behind me, I set up Oxbow to help complex organisations turn programmes of work into campaigns, reports and stories that change how people think and act.</p>
       <div class="ctas">
         <a class="btn btn-primary" href="#contact">Book a 30-minute call</a>
         <a class="btn btn-ghost" href="#work">See the work</a>
       </div>
+        </div>
       </div>
     </div>
   </div>
@@ -355,6 +375,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <h3>A River Set Free</h3>
           <p class="clients">Environment Agency · Natural England · Tweed Forum</p>
           <p>Restoring the River Breamish. Bringing together national resilience strategy with on-the-ground partnership action, with 2.5 km of river restored.</p>
+          <div class="kpis">
+            <div class="kpi"><b>132k</b><small>YouTube views</small></div>
+            <div class="kpi"><b>3.4m</b><small>Impressions</small></div>
+          </div>
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
@@ -367,7 +391,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
               <div><h4>What we did</h4><p>Tommy brought more than 20 years in business and a multidisciplinary environmental degree to the brief: the experience to win the trust of every kind of stakeholder, and to turn complex science into a clear, watchable story.</p>
                 <p style="margin-top:10px">We filmed the project, managed a team of skilled freelancers and guided the steering group through the story. Few creatives can lead both the big-picture strategy and the detail of great film-making. At Oxbow, we do both.</p></div>
               <div class="stats">
-                <div class="stat"><b>132,000</b><small>Views</small></div>
+                <div class="stat"><b>132,000</b><small>YouTube views</small></div>
                 <div class="stat"><b>3.4m</b><small>Impressions</small></div>
                 <div class="stat"><b>1,200</b><small>Engagements</small></div>
                 <div class="stat"><b>21</b><small>Pieces of earned coverage</small></div>
@@ -390,6 +414,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <h3>Trails on Trial</h3>
           <p class="clients">Specialized · Patagonia</p>
           <p>Facilitating a new way of working between UK land managers and the bike-riding public.</p>
+          <div class="kpis">
+            <div class="kpi"><b>120k</b><small>YouTube views</small></div>
+            <div class="kpi"><b>900+</b><small>Engagements</small></div>
+          </div>
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
@@ -421,6 +449,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <h3>Restoring the River Till</h3>
           <p class="clients">Tweed Forum</p>
           <p>Bringing the worthwhile but little-known work of a few to the many: more than 100,000 views and a surge of interest that keeps building.</p>
+          <div class="kpis">
+            <div class="kpi"><b>105k</b><small>YouTube views</small></div>
+            <div class="kpi"><b>175k</b><small>Views across social</small></div>
+          </div>
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
@@ -428,7 +460,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
               <div><h4>What we did</h4><p>We created the digital media strategy and plan for YouTube and social, and secured earned PR on the back of it.</p></div>
               <div class="stats">
                 <div class="stat"><b>105k</b><small>YouTube views</small></div>
-                <div class="stat"><b>75k</b><small>Views across social</small></div>
+                <div class="stat"><b>175k</b><small>Views across social</small></div>
                 <div class="stat"><b>9×</b><small>More views than any previous Tweed Forum project</small></div>
               </div>
               <p class="credits">Client: Tweed Forum · Oxbow: digital media strategy, planning and PR</p>
@@ -447,6 +479,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <h3>The Slymefoot Slide</h3>
           <p class="clients">Wahoo · Komoot</p>
           <p>Helping recreationalists understand river health.</p>
+          <div class="kpis">
+            <div class="kpi"><b>275k</b><small>Views on social</small></div>
+            <div class="kpi"><b>Award-winning</b><small>Route creation</small></div>
+          </div>
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
@@ -473,6 +509,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <h3>Reconnecting Wooler Water</h3>
           <p class="clients">Environment Agency</p>
           <p>Helping secure a future for Atlantic salmon on the Wooler Water.</p>
+          <div class="kpis">
+            <div class="kpi"><b>10+</b><small>Charitable trusts engaged</small></div>
+            <div class="kpi"><b>Holding page</b><small>Website development</small></div>
+          </div>
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
