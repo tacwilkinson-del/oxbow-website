@@ -28,6 +28,7 @@
   --band:#0B0F0D; --band-fg:#EDEFE9; --band-muted:#B9C1BA; --band-line:#26302B; color-scheme:dark}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 .wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
@@ -197,6 +198,25 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--kingfisher);outl
 .band .testimonial{border-top-color:var(--band-line)}
 .band .testimonial figcaption{color:var(--band-muted)}
 @media (max-width:600px){.testimonial{grid-template-columns:minmax(0,1fr);gap:12px}.testimonial > svg{margin-top:0}}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(200px,24vw,320px);grid-auto-flow:dense;gap:14px}
+.g-item{margin:0;position:relative;border-radius:14px;overflow:hidden;background:#26302B;min-width:0}
+.g-item.big{grid-column:span 2;grid-row:span 2}
+.g-item.tall{grid-row:span 2}
+.g-item.wide{grid-column:span 2}
+.g-item img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .4s ease}
+.g-item video{width:100%;height:100%;object-fit:cover;display:block}
+.g-item:hover img{transform:scale(1.03)}
+.g-ph{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:10px;border:1.5px dashed #46544C;border-radius:14px;color:#6E7B73;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+.g-ph svg{width:44px;height:34px;color:#4C5A52;--beam:#4C5A52}
+.g-item figcaption{position:absolute;left:12px;bottom:12px;right:12px;font-size:.78rem;line-height:1.35;color:#EDEFE9;background:rgba(28,36,32,.72);padding:6px 10px;border-radius:6px;width:max-content;max-width:min(70%,360px)}
+.g-sound{position:absolute;top:12px;right:12px;background:rgba(28,36,32,.75);color:#EDEFE9;border:1px solid #46544C;border-radius:999px;padding:6px 12px;font:500 .78rem var(--f-sans);cursor:pointer}
+.g-sound:hover{border-color:var(--kingfisher)}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(11,15,13,.94);display:grid;place-items:center;align-content:center;gap:14px;padding:max(20px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
+.lightbox img{max-width:min(1200px,100%);max-height:80vh;border-radius:10px}
+.lightbox p{color:#B9C1BA;font-size:.95rem;margin:0}
+.lb-close{position:absolute;top:max(16px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));background:none;border:1px solid #46544C;color:#EDEFE9;border-radius:999px;padding:8px 16px;font:500 .9rem var(--f-sans);cursor:pointer}
+@media (max-width:760px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:210px}}
+@media (max-width:480px){.gallery{grid-template-columns:minmax(0,1fr);grid-auto-rows:240px}.g-item.big{grid-column:auto;grid-row:span 1}.g-item.wide{grid-column:auto}}
 footer{background:var(--band);color:var(--band-muted);border-top:1px solid var(--band-line);padding-block:32px;font-size:.88rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
 
@@ -224,6 +244,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  .g-item img{transition:none}
   .hero h1 .w,.hero .sub,.hero h1 em::after{animation:none}
   .video .play{transition:none}
   .play .p{animation:none}
@@ -249,6 +270,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
     <a class="brand" href="#top" aria-label="Oxbow, back to top"><svg class="sym" style="width:132px;height:19px;color:var(--band-fg);--beam:var(--kingfisher)" role="img" aria-label="Oxbow"><use href="#ox-h"/></svg></a>
     <ul id="menu">
       <li><a href="#work">Work</a></li>
+      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#approach">Approach</a></li>
       <li><a href="#offers">Ways to work</a></li>
@@ -371,14 +393,19 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
-              <div><h4>The challenge</h4><p>[What the client needed to change, and who they needed to reach.]</p></div>
-              <div><h4>What we did</h4><p>[The idea, the channels and what we made.]</p></div>
+              <div><h4>The challenge</h4><p>Soil Searching is Specialized’s CSR programme, and it is far more than lip service to the people and places that help Specialized exist as a brand. The team is passionate about bringing the joy of mountain biking to more people, whatever bike they ride.</p>
+                <p style="margin-top:10px">UK mountain biking had reached an inflection point: growing quickly, but with little connection between the big providers of recreational land and the riders actually using it.</p></div>
+              <div><h4>What we did</h4><p>Acting as an independent go-between, we created a programme of media, workshops and talks to bridge that gap.</p></div>
               <div class="stats">
-                <div class="stat"><b>[__]</b><small>[Result 1, e.g. views]</small></div>
-                <div class="stat"><b>[__]</b><small>[Result 2, e.g. sign-ups]</small></div>
-                <div class="stat"><b>[__]</b><small>[Result 3, e.g. cost per action]</small></div>
+                <div class="stat"><b>120k</b><small>YouTube views</small></div>
+                <div class="stat"><b>1m+</b><small>Views across social</small></div>
+                <div class="stat"><b>900+</b><small>Engagements</small></div>
+                <div class="stat"><b>8</b><small>Film nights</small></div>
+                <div class="stat"><b>5</b><small>Round tables</small></div>
+                <div class="stat"><b>3</b><small>Outdoor festival awards</small></div>
+                <div class="stat"><b>1</b><small>Trail fund raffle</small></div>
               </div>
-              <p class="credits">Clients: Specialized, Patagonia · [Services]</p>
+              <p class="credits">Clients: Specialized (Soil Searching), Patagonia · Oxbow: media, workshops and talks</p>
             </div>
           </details>
         </div>
@@ -397,14 +424,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
-              <div><h4>The challenge</h4><p>[What the client needed to change, and who they needed to reach.]</p></div>
-              <div><h4>What we did</h4><p>[The idea, the channels and what we made.]</p></div>
+              <div><h4>The challenge</h4><p>Celebrate ten years of a significant environmental restoration programme: build public awareness, highlight achievements to funders and strengthen influence on policy decisions.</p></div>
+              <div><h4>What we did</h4><p>We created the digital media strategy and plan for YouTube and social, and secured earned PR on the back of it.</p></div>
               <div class="stats">
-                <div class="stat"><b>100k+</b><small>Views</small></div>
-                <div class="stat"><b>[__]</b><small>[Result 2, e.g. sign-ups]</small></div>
-                <div class="stat"><b>[__]</b><small>[Result 3, e.g. cost per action]</small></div>
+                <div class="stat"><b>105k</b><small>YouTube views</small></div>
+                <div class="stat"><b>75k</b><small>Views across social</small></div>
+                <div class="stat"><b>9×</b><small>More views than any previous Tweed Forum project</small></div>
               </div>
-              <p class="credits">Client: Tweed Forum · [Services]</p>
+              <p class="credits">Client: Tweed Forum · Oxbow: digital media strategy, planning and PR</p>
             </div>
           </details>
         </div>
@@ -413,24 +440,24 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <a class="video" href="https://www.youtube.com/watch?v=MZ56EqgseOI" data-yt="MZ56EqgseOI" target="_blank" rel="noopener" style="background-color:#1C2420" aria-label="Play the film: The Slymefoot Slide">
           <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke-linecap="round" stroke-width="1.6" stroke="#8C9A5B" stroke-opacity=".6"><path d="M0 40 C 70 30, 130 30, 200 40 S 330 50, 400 40" stroke="#E8622F" stroke-opacity="1" stroke-width="2.6"/><path d="M180 60 V110 A100 100 0 0 0 380 110 V60"/><path d="M220 60 V110 A60 60 0 0 0 340 110 V60"/></svg>
           <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
-          <span class="vlabel">Film · [Year]</span>
+          <span class="vlabel">Film · 2022</span>
         </a>
         <div class="info">
-          <span class="meta">Outdoor brands · [Year]</span>
+          <span class="meta">Outdoor brands · 2022</span>
           <h3>The Slymefoot Slide</h3>
           <p class="clients">Wahoo · Komoot</p>
           <p>Helping recreationalists understand river health.</p>
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
-              <div><h4>The challenge</h4><p>[What the client needed to change, and who they needed to reach.]</p></div>
-              <div><h4>What we did</h4><p>[The idea, the channels and what we made.]</p></div>
+              <div><h4>The challenge</h4><p>Raise awareness of how technology and apps can take us to new places, teach us new things and reconnect us with the natural world.</p></div>
+              <div><h4>What we did</h4><p>We created a new route from scratch through the wild Northumbrian hills, made a short documentary and more than 25 social media assets, and ran a four-day press camp for eight media outlets. The result: 47 pieces of earned coverage, from the sports press to National Geographic Traveller.</p></div>
               <div class="stats">
-                <div class="stat"><b>[__]</b><small>[Result 1]</small></div>
-                <div class="stat"><b>[__]</b><small>[Result 2]</small></div>
-                <div class="stat"><b>[__]</b><small>[Result 3]</small></div>
+                <div class="stat"><b>47</b><small>Pieces of earned coverage</small></div>
+                <div class="stat"><b>25+</b><small>Social media assets</small></div>
+                <div class="stat"><b>8</b><small>Media on a four-day press camp</small></div>
               </div>
-              <p class="credits">Clients: Wahoo, Komoot · [Services]</p>
+              <p class="credits">Clients: Wahoo, Komoot · Oxbow: route design, documentary, social content and press</p>
             </div>
           </details>
         </div>
@@ -439,24 +466,24 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <a class="video" href="https://www.youtube.com/watch?v=_uQ5f3FMmlQ" data-yt="_uQ5f3FMmlQ" target="_blank" rel="noopener" style="background-color:#8C9A5B" aria-label="Play the film: Reconnecting Wooler Water">
           <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke-linecap="round" stroke-width="1.6" stroke="#1C2420" stroke-opacity=".35"><path d="M20 30 V110 A80 80 0 0 0 180 110 V30"/><path d="M50 30 V110 A50 50 0 0 0 150 110 V30"/><path d="M80 30 V110 A20 20 0 0 0 120 110 V30"/></svg>
           <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
-          <span class="vlabel">Film · [Year]</span>
+          <span class="vlabel">Film · 2025</span>
         </a>
         <div class="info">
-          <span class="meta">Public sector · [Year]</span>
+          <span class="meta">Public sector · 2025</span>
           <h3>Reconnecting Wooler Water</h3>
           <p class="clients">Environment Agency</p>
           <p>Helping secure a future for Atlantic salmon on the Wooler Water.</p>
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
-              <div><h4>The challenge</h4><p>[What the client needed to change, and who they needed to reach.]</p></div>
-              <div><h4>What we did</h4><p>[The idea, the channels and what we made.]</p></div>
+              <div><h4>The challenge</h4><p>Wooler Water holds the last physical barrier anywhere in the vast Tweed catchment that salmon and sea trout simply can’t clear. The project had been running for 15 years and needed fresh impetus.</p></div>
+              <div><h4>What we did</h4><p>We pushed the boundaries, and our client, to tell the story through the prism of Atlantic salmon. With striking illustration and animation, we made complex messages simple and clear, so audiences could understand the threats salmon face.</p></div>
               <div class="stats">
-                <div class="stat"><b>[__]</b><small>[Result 1]</small></div>
-                <div class="stat"><b>[__]</b><small>[Result 2]</small></div>
-                <div class="stat"><b>[__]</b><small>[Result 3]</small></div>
+                <div class="stat"><b>10+</b><small>Charitable funding trusts engaged</small></div>
+                <div class="stat"><b>8</b><small>Presentations direct to funders</small></div>
+                <div class="stat"><b>5</b><small>Stakeholders brought together</small></div>
               </div>
-              <p class="credits">Client: Environment Agency · [Services]</p>
+              <p class="credits">Client: Environment Agency · Oxbow: story, illustration and animation</p>
             </div>
           </details>
         </div>
@@ -472,6 +499,55 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   </div>
 </section>
 
+<section id="gallery" class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Gallery</span>
+      <h2>Behind the films and campaigns</h2>
+      <p class="lede">Stills, screenshots and moments from the field.</p>
+    </div>
+    <div class="gallery">
+      <figure class="g-item big">
+        <video class="g-video" autoplay muted loop playsinline preload="metadata" poster="media/gallery-hero.jpg" aria-label="Animated map: the salmon migration from Wooler Water to Greenland">
+          <source src="media/gallery-hero.mp4" type="video/mp4">
+        </video>
+        <figcaption>Conceptual illustration and animation highlighting the journey of Atlantic salmon</figcaption>
+      </figure>
+      <figure class="g-item tall">
+        <img src="media/gallery-waterfall.jpg" alt="Tommy filming with a camera on a tripod beside a waterfall" loading="lazy" style="object-position:16% 60%">
+        <figcaption>Managing resources on location and keeping every deliverable consistent</figcaption>
+      </figure>
+      <figure class="g-item ">
+        <video class="g-video" autoplay muted loop playsinline preload="metadata" poster="media/gallery-fpv.jpg" aria-label="FPV drone footage flying low through mossy woodland along a stream">
+          <source src="media/gallery-fpv.mp4" type="video/mp4">
+        </video>
+        <figcaption>FPV drone filming, low through ancient woodland</figcaption>
+      </figure>
+      <figure class="g-item ">
+        <img src="media/gallery-highland.jpg" alt="Close-up of a Highland cow’s horns and russet coat beside a lichen-covered branch" loading="lazy" style="object-position:40% 40%">
+        <figcaption>Telling the stories of wilder landscapes</figcaption>
+      </figure>
+      <figure class="g-item wide">
+        <video class="g-video" autoplay muted loop playsinline preload="metadata" poster="media/gallery-farming.jpg" style="object-position:40% 30%" aria-label="Interview clip: Farming optimally, not maximally">
+          <source src="media/gallery-farming.mp4" type="video/mp4">
+        </video>
+        <button type="button" class="g-sound" aria-pressed="false">Sound on</button>
+        <figcaption>Farming optimally, not maximally</figcaption>
+      </figure>
+      <figure class="g-item ">
+        <img src="media/gallery-oh-poop.jpg" alt="Engraving-style illustration of a trout swimming through sewage in a river, thinking “Oh poop!”" loading="lazy" style="object-position:78% 50%">
+        <figcaption>Illustration: making water quality memorable</figcaption>
+      </figure>
+      <figure class="g-item ">
+        <img src="media/gallery-farmer.jpg" alt="Smiling farmer in work clothes standing in a hillside pasture with cattle grazing behind" loading="lazy" style="object-position:30% 35%">
+        <figcaption>Using personality to increase sales for a farm’s direct-to-consumer business</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" hidden><button type="button" class="lb-close" id="lbClose">Close</button><img id="lbImg" alt=""><p id="lbCap"></p></div>
+
 <section id="services">
   <div class="wrap">
     <div class="head">
@@ -482,9 +558,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
     <div class="services">
       <div class="svc"><h3>Campaigns</h3><p>Public information and behaviour-change campaigns, from strategy to street.</p></div>
       <div class="svc"><h3>Reports and data</h3><p>Annual, impact and evidence reports, with charts and maps that make data clear.</p></div>
-      <div class="svc"><h3>Identity</h3><p>Brands for programmes, partnerships and places that need to be recognised and trusted.</p></div>
+      <div class="svc"><h3>Brand identity and strategy</h3><p>Brands for programmes, partnerships and places that need to be recognised and trusted.</p></div>
       <div class="svc"><h3>Film and photography</h3><p>Short films and stills from the field, made with the people who do the work.</p></div>
-      <div class="svc"><h3>Signage and interpretation</h3><p>Panels, trails and wayfinding for parks, reserves and rivers.</p></div>
+      <div class="svc"><h3>Print, signage and interpretation</h3><p>Brochures, leaflets and printed materials, plus panels, trails and wayfinding for parks, reserves and rivers.</p></div>
       <div class="svc"><h3>Digital</h3><p>Websites, interactive tools and social content that people use and share.</p></div>
     </div>
     <figure class="testimonial">
@@ -531,7 +607,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <span class="badge">Most requested</span>
         <h3>Campaign</h3>
         <p style="color:var(--muted)">From mini campaigns to large, multimedia, long-running campaigns.</p>
-        <p class="price"><small>from</small> £9,500</p>
+        <p class="price"><small>from</small> £9,750</p>
         <ul><li>Strategy, creative and production</li><li>Film, print, digital and on-site</li><li>Results report at the end</li></ul>
         <a class="btn btn-primary" href="#contact" data-offer="Campaign">Plan a campaign</a>
       </div>
@@ -670,6 +746,35 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       v.querySelectorAll('.play,.vlabel').forEach(function(n){n.remove();});
       v.appendChild(f);
     },{once:true});
+  });
+
+  /* Gallery lightbox: click any gallery image to see it larger. */
+  var lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg'), lbCap=document.getElementById('lbCap');
+  function closeLb(){lb.hidden=true;lbImg.src='';}
+  document.querySelectorAll('.g-item img').forEach(function(img){
+    img.setAttribute('tabindex','0');
+    var open=function(){lbImg.src=img.currentSrc||img.src;lbImg.alt=img.alt;var c=img.closest('figure').querySelector('figcaption');lbCap.textContent=c?c.textContent:'';lb.hidden=false;document.getElementById('lbClose').focus();};
+    img.addEventListener('click',open);
+    img.addEventListener('keydown',function(e){if(e.key==='Enter'){open();}});
+  });
+  document.getElementById('lbClose').addEventListener('click',closeLb);
+  lb.addEventListener('click',function(e){if(e.target===lb){closeLb();}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden){closeLb();}});
+
+  /* Gallery video: respect reduced-motion settings by showing the still frame instead. */
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.querySelectorAll('.g-video').forEach(function(v){v.removeAttribute('autoplay');try{v.pause();}catch(e){}});}
+
+  /* Gallery sound toggle: clips play silently; a button turns the sound on and restarts the clip. */
+  document.querySelectorAll('.g-sound').forEach(function(btn){
+    var v=btn.parentNode.querySelector('video');
+    btn.addEventListener('click',function(){
+      var on=v.muted;
+      v.muted=!on;
+      if(on){v.currentTime=0;}
+      try{var p=v.play(); if(p&&p.catch){p.catch(function(){});}}catch(e){}
+      btn.textContent=on?'Sound off':'Sound on';
+      btn.setAttribute('aria-pressed',on?'true':'false');
+    });
   });
   var y=document.getElementById('yr'); if(y){y.textContent=new Date().getFullYear();}
 })();
