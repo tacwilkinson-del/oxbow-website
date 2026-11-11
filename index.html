@@ -223,6 +223,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--kingfisher);outl
 .g-ph{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:10px;border:1.5px dashed #46544C;border-radius:14px;color:#6E7B73;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
 .g-ph svg{width:44px;height:34px;color:#4C5A52;--beam:#4C5A52}
 .g-item figcaption{position:absolute;left:12px;bottom:12px;right:12px;font-size:.78rem;line-height:1.35;color:#EDEFE9;background:rgba(28,36,32,.72);padding:6px 10px;border-radius:6px;width:max-content;max-width:min(70%,360px)}
+.g-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;border:0;background:var(--kingfisher);color:#1C2420;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px -8px rgba(0,0,0,.5);transition:transform .15s ease}
+.g-play svg{width:30px;height:30px;margin-left:4px}
+.g-play:hover{transform:translate(-50%,-50%) scale(1.06)}
+.g-click{cursor:pointer}
 .g-sound{position:absolute;top:12px;right:12px;background:rgba(28,36,32,.75);color:#EDEFE9;border:1px solid #46544C;border-radius:999px;padding:6px 12px;font:500 .78rem var(--f-sans);cursor:pointer}
 .g-sound:hover{border-color:var(--kingfisher)}
 .lightbox{position:fixed;inset:0;z-index:50;background:rgba(11,15,13,.94);display:grid;place-items:center;align-content:center;gap:14px;padding:max(20px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
@@ -258,6 +262,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  .g-play{transition:none}
   .g-item img{transition:none}
   .hero h1 .w,.hero .sub,.hero h1 em::after{animation:none}
   .video .play{transition:none}
@@ -548,9 +553,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
     </div>
     <div class="gallery">
       <figure class="g-item big">
-        <video class="g-video" autoplay muted loop playsinline preload="metadata" poster="media/gallery-hero.jpg" aria-label="Animated map: the salmon migration from Wooler Water to Greenland">
+        <video class="g-video g-click" muted playsinline preload="metadata" poster="media/gallery-hero.jpg" aria-label="Animated map: the salmon migration from Wooler Water to Greenland">
           <source src="media/gallery-hero.mp4" type="video/mp4">
         </video>
+        <button type="button" class="g-play" aria-label="Play the salmon migration animation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
         <figcaption>Conceptual illustration and animation highlighting the journey of Atlantic salmon</figcaption>
       </figure>
       <figure class="g-item tall">
@@ -558,9 +564,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <figcaption>Managing resources on location and keeping every deliverable consistent</figcaption>
       </figure>
       <figure class="g-item ">
-        <video class="g-video" autoplay muted loop playsinline preload="metadata" poster="media/gallery-fpv.jpg" aria-label="FPV drone footage flying low through mossy woodland along a stream">
+        <video class="g-video g-click" muted playsinline preload="metadata" poster="media/gallery-fpv.jpg" aria-label="FPV drone footage flying low through mossy woodland along a stream">
           <source src="media/gallery-fpv.mp4" type="video/mp4">
         </video>
+        <button type="button" class="g-play" aria-label="Play the FPV drone clip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
         <figcaption>FPV drone filming, low through ancient woodland</figcaption>
       </figure>
       <figure class="g-item ">
@@ -568,10 +575,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <figcaption>Telling the stories of wilder landscapes</figcaption>
       </figure>
       <figure class="g-item wide">
-        <video class="g-video" autoplay muted loop playsinline preload="metadata" poster="media/gallery-farming.jpg" style="object-position:40% 30%" aria-label="Interview clip: Farming optimally, not maximally">
+        <video class="g-video g-click" playsinline preload="metadata" poster="media/gallery-farming.jpg" style="object-position:40% 30%" aria-label="Interview clip: Farming optimally, not maximally">
           <source src="media/gallery-farming.mp4" type="video/mp4">
         </video>
-        <button type="button" class="g-sound" aria-pressed="false">Sound on</button>
+        <button type="button" class="g-play" aria-label="Play the interview clip with sound"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
         <figcaption>Farming optimally, not maximally</figcaption>
       </figure>
       <figure class="g-item ">
@@ -815,6 +822,17 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       btn.textContent=on?'Sound off':'Sound on';
       btn.setAttribute('aria-pressed',on?'true':'false');
     });
+  });
+
+  /* Click-to-play gallery videos: play on click, pause on a second click, show the play button when stopped. */
+  document.querySelectorAll('.g-click').forEach(function(v){
+    var btn=v.parentNode.querySelector('.g-play');
+    var toggle=function(){ if(v.paused||v.ended){ var p=v.play(); if(p&&p.catch){p.catch(function(){});} } else { v.pause(); } };
+    v.addEventListener('click',toggle);
+    if(btn){btn.addEventListener('click',toggle);}
+    v.addEventListener('play',function(){ if(btn){btn.hidden=true;} });
+    v.addEventListener('pause',function(){ if(btn){btn.hidden=false;} });
+    v.addEventListener('ended',function(){ if(btn){btn.hidden=false;} v.currentTime=0; });
   });
   var y=document.getElementById('yr'); if(y){y.textContent=new Date().getFullYear();}
 })();
