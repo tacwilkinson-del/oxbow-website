@@ -70,7 +70,34 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hero{background:var(--band);color:var(--band-fg);padding-block:clamp(56px,8vw,104px) clamp(64px,9vw,112px);position:relative;overflow:hidden}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(28px,4vw,48px)}
 .hero-copy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(28px,5vw,64px);align-items:end}
-.hero .reel{border-radius:18px}
+.hero{padding-top:0}
+.hero-media{position:relative;margin-bottom:clamp(40px,6vw,80px)}
+.hero .reel{border-radius:0;width:100%;aspect-ratio:auto;height:min(56.25vw,82vh);min-height:300px}
+.hero .reel::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(28,36,32,.55),rgba(28,36,32,0) 45%)}
+.hero .reel .play,.hero .reel .vlabel{z-index:2}
+.hero .reel .vlabel{left:max(20px,calc((100% - var(--wrap))/2 + 20px));bottom:20px}
+.hero-over{position:absolute;inset:0 0 auto 0;z-index:3;pointer-events:none;padding-top:clamp(24px,4vw,48px);transition:opacity .4s ease}
+.hero-media.playing .hero-over,.hero-media.playing .reel::before{opacity:0}
+.hero-media.playing .reel::before{display:none}
+.reel-track{position:absolute;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain}
+.reel-track::-webkit-scrollbar{display:none}
+.reel-slide{position:relative;flex:0 0 100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;background:#26302B}
+.reel-slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.reel-bar{position:absolute;left:0;right:0;bottom:20px;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-inline:max(20px,calc((100% - var(--wrap))/2 + 20px));pointer-events:none}
+.reel-bar>*{pointer-events:auto}
+.reel-count{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(28,36,32,.7);color:#EDEFE9;padding:7px 10px;border-radius:6px;white-space:nowrap}
+.reel-dots{display:flex;gap:4px;margin-left:auto;flex:none}
+.reel-dot{width:28px;height:28px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+.reel-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:rgba(237,239,233,.5);transition:width .3s ease,background .3s ease}
+.reel-dot[aria-current="true"]::before{width:22px;border-radius:4px;background:var(--kingfisher)}
+.reel-toggle,.reel-arrow{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(237,239,233,.4);background:rgba(28,36,32,.6);color:#EDEFE9;display:grid;place-items:center;cursor:pointer;padding:0}
+.reel-toggle:hover,.reel-arrow:hover{background:rgba(28,36,32,.85)}
+.reel-toggle svg{width:18px;height:18px}.reel-arrow svg{width:22px;height:22px}
+.reel-toggle .i-play{display:none}
+.reel-toggle.paused .i-play{display:inline}.reel-toggle.paused .i-pause{display:none}
+.reel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4}
+.reel-arrow.prev{left:20px}.reel-arrow.next{right:20px}
+@media (max-width:640px){.reel-arrow{display:none}.rc-name{display:none}.reel-bar{bottom:14px}.reel-count{font-size:.66rem}.reel-dot{width:22px}}
 .hero .reel .play{width:88px;height:88px}
 .hero .reel .play svg{width:36px;height:36px}
 .hero h1{font-size:clamp(2.6rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-.03em}
@@ -99,9 +126,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .trusted .wrap{display:grid;gap:22px}
 .trusted h2.eyebrow{font-size:.78rem;font-weight:400;letter-spacing:.14em;color:#58625C}
 .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.track{display:flex;width:max-content;animation:marquee 38s linear infinite}
-.marquee:hover .track{animation-play-state:paused}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.track{display:flex;width:max-content;animation:marquee 38s linear infinite;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+@media (hover:hover) and (pointer:fine){.marquee:hover .track{animation-play-state:paused}}
+@keyframes marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 .logos{list-style:none;margin:0;padding:0 clamp(28px,3.5vw,48px) 0 0;display:flex;flex-wrap:nowrap;align-items:center;gap:clamp(28px,3.5vw,48px)}
 .logo{flex:none}
 .logo{display:flex;align-items:center;justify-content:center;height:56px;min-width:0}
@@ -189,6 +216,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .offer ul{margin:0;padding-left:20px;color:var(--muted);display:grid;gap:6px}
 .offer .btn{margin-top:auto;align-self:flex-start}
 .offer .btn-ghost{color:var(--fg)}
+.offer.custom{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;align-items:center;gap:20px 40px}
+.offer.custom .btn{margin-top:0;align-self:center;justify-self:start}
+.offer.custom>div{display:flex;flex-direction:column;gap:14px}
+@media (max-width:860px){.offer.custom{grid-template-columns:minmax(0,1fr);align-items:start}.offer.custom .btn{align-self:flex-start}}
 .badge{align-self:flex-start;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;background:var(--accent-soft);color:var(--accent);padding:5px 10px;border-radius:999px}
 
 /* FAQ */
@@ -277,9 +308,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .track{animation:none}
-  .marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
-  .track .logos[aria-hidden]{display:none}
+  .track{animation-duration:70s}
   .g-play{transition:none}
   .g-item img{transition:none}
   .hero h1 .w,.hero .sub,.hero h1 em::after{animation:none}
@@ -319,7 +348,25 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 </nav>
 
 <header class="hero" id="top">
-  <div class="wrap">
+  <div class="hero-media">
+    <div class="video reel" id="reel" aria-roledescription="carousel" aria-label="Showreel">
+      <div class="reel-track" id="reelTrack">
+        <div class="reel-slide" role="group" aria-roledescription="slide" aria-label="1 of 5: FPV woodland"><video muted playsinline preload="auto" poster="media/reel-1.jpg" aria-label="Flying low along a stream through mossy woodland"><source src="media/reel-1.mp4" type="video/mp4"></video></div>
+        <div class="reel-slide" role="group" aria-roledescription="slide" aria-label="2 of 5: On the hill"><video muted playsinline preload="none" poster="media/reel-2.jpg" aria-label="Walking through bracken on a misty hillside"><source src="media/reel-2.mp4" type="video/mp4"></video></div>
+        <div class="reel-slide" role="group" aria-roledescription="slide" aria-label="3 of 5: Wooler to Greenland"><video muted playsinline preload="none" poster="media/reel-3.jpg" aria-label="Animated map: the salmon migration from Wooler to Greenland"><source src="media/reel-3.mp4" type="video/mp4"></video></div>
+        <div class="reel-slide" role="group" aria-roledescription="slide" aria-label="4 of 5: Salmon run"><video muted playsinline preload="none" poster="media/reel-4.jpg" aria-label="A salmon leaping a waterfall"><source src="media/reel-4.mp4" type="video/mp4"></video></div>
+        <div class="reel-slide" role="group" aria-roledescription="slide" aria-label="5 of 5: River at sunrise"><video muted playsinline preload="none" poster="media/reel-5.jpg" aria-label="Drone view of a winding river at sunrise"><source src="media/reel-5.mp4" type="video/mp4"></video></div>
+      </div>
+      <button class="reel-arrow prev" type="button" aria-label="Previous clip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="reel-arrow next" type="button" aria-label="Next clip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="reel-bar">
+        <span class="reel-count" id="reelCount" aria-live="polite">01 / 05<span class="rc-name"> · FPV woodland</span></span>
+        <div class="reel-dots"><button type="button" class="reel-dot" aria-label="Show clip 1: FPV woodland"></button><button type="button" class="reel-dot" aria-label="Show clip 2: On the hill"></button><button type="button" class="reel-dot" aria-label="Show clip 3: Wooler to Greenland"></button><button type="button" class="reel-dot" aria-label="Show clip 4: Salmon run"></button><button type="button" class="reel-dot" aria-label="Show clip 5: River at sunrise"></button></div>
+        <button class="reel-toggle" id="reelToggle" type="button" aria-label="Pause the showreel"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+      </div>
+    </div>
+    <div class="hero-over" aria-hidden="false">
+      <div class="wrap">
     <div class="hero-mark play" id="heroMark">
       <svg viewBox="0 8 120 94" role="img" aria-label="The Oxbow mark: three collars under a meandering river line" fill="none" stroke-linecap="round" stroke-width="3">
         <path class="p" pathLength="1" stroke="#E8622F" d="M6 16 C24 12.5 42 12.5 60 16 C78 19.5 96 19.5 114 16"/>
@@ -328,11 +375,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <path class="p" pathLength="1" stroke="#EDEFE9" style="animation-delay:1.01s" d="M46 29 V58 A14 14 0 0 0 74 58 V29"/>
       </svg>
     </div>
-    <a class="video reel" href="https://vimeo.com/" data-vimeo="" target="_blank" rel="noopener" style="background-color:#26302B" aria-label="Play the Oxbow showreel">
-      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M0 140 C 270 110, 530 110, 800 140 S 1330 170, 1600 140" stroke="#E8622F" stroke-width="5"/><g stroke="#3F4C45" stroke-width="3"><path d="M820 200 V520 A380 380 0 0 0 1580 520 V200"/><path d="M940 200 V520 A260 260 0 0 0 1460 520 V200"/><path d="M1060 200 V520 A140 140 0 0 0 1340 520 V200"/></g></svg>
-      <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
-      <span class="vlabel">Showreel · [Vimeo video ID]</span>
-    </a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
     <div class="hero-copy">
       <div>
       <span class="eyebrow" style="color:#F3A07C">Communications studio</span>
@@ -363,24 +409,24 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
     <div class="marquee">
       <div class="track">
         <ul class="logos">
-        <li class="logo sq"><img src="media/logos/tweed-forum.png" alt="Tweed Forum" loading="lazy"></li>
-        <li class="logo wd"><img src="media/logos/environment-agency.png" alt="Environment Agency" loading="lazy" style="height:44px"></li>
-        <li class="logo wd"><img src="media/logos/patagonia.png" alt="Patagonia" loading="lazy"></li>
-        <li class="logo wd"><img src="media/logos/komoot.png" alt="Komoot" loading="lazy"></li>
-        <li class="logo sq"><img src="media/logos/natural-england.png" alt="Natural England" loading="lazy"></li>
-        <li class="logo sq"><img src="media/logos/peelham-farm.png" alt="Peelham Farm" loading="lazy"></li>
-        <li class="logo wd"><img src="media/logos/forestry-england.png" alt="Forestry England" loading="lazy" style="height:40px"></li>
-        <li class="logo sq"><img src="media/logos/scott.png" alt="Scott" loading="lazy"></li>
+        <li class="logo sq"><img decoding="async" src="media/logos/tweed-forum.png" alt="Tweed Forum"></li>
+        <li class="logo wd"><img decoding="async" src="media/logos/environment-agency.png" alt="Environment Agency" style="height:44px"></li>
+        <li class="logo wd"><img decoding="async" src="media/logos/patagonia.png" alt="Patagonia"></li>
+        <li class="logo wd"><img decoding="async" src="media/logos/komoot.png" alt="Komoot"></li>
+        <li class="logo sq"><img decoding="async" src="media/logos/natural-england.png" alt="Natural England"></li>
+        <li class="logo sq"><img decoding="async" src="media/logos/peelham-farm.png" alt="Peelham Farm"></li>
+        <li class="logo wd"><img decoding="async" src="media/logos/forestry-england.png" alt="Forestry England" style="height:40px"></li>
+        <li class="logo sq"><img decoding="async" src="media/logos/scott.png" alt="Scott"></li>
     </ul>
         <ul class="logos" aria-hidden="true">
-        <li class="logo sq"><img src="media/logos/tweed-forum.png" alt="" loading="lazy"></li>
-        <li class="logo wd"><img src="media/logos/environment-agency.png" alt="" loading="lazy" style="height:44px"></li>
-        <li class="logo wd"><img src="media/logos/patagonia.png" alt="" loading="lazy"></li>
-        <li class="logo wd"><img src="media/logos/komoot.png" alt="" loading="lazy"></li>
-        <li class="logo sq"><img src="media/logos/natural-england.png" alt="" loading="lazy"></li>
-        <li class="logo sq"><img src="media/logos/peelham-farm.png" alt="" loading="lazy"></li>
-        <li class="logo wd"><img src="media/logos/forestry-england.png" alt="" loading="lazy" style="height:40px"></li>
-        <li class="logo sq"><img src="media/logos/scott.png" alt="" loading="lazy"></li>
+        <li class="logo sq"><img decoding="async" src="media/logos/tweed-forum.png" alt=""></li>
+        <li class="logo wd"><img decoding="async" src="media/logos/environment-agency.png" alt="" style="height:44px"></li>
+        <li class="logo wd"><img decoding="async" src="media/logos/patagonia.png" alt=""></li>
+        <li class="logo wd"><img decoding="async" src="media/logos/komoot.png" alt=""></li>
+        <li class="logo sq"><img decoding="async" src="media/logos/natural-england.png" alt=""></li>
+        <li class="logo sq"><img decoding="async" src="media/logos/peelham-farm.png" alt=""></li>
+        <li class="logo wd"><img decoding="async" src="media/logos/forestry-england.png" alt="" style="height:40px"></li>
+        <li class="logo sq"><img decoding="async" src="media/logos/scott.png" alt=""></li>
     </ul>
       </div>
     </div>
@@ -720,6 +766,15 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
         <ul><li>Agreed monthly hours</li><li>Quarterly reporting</li><li>Priority turnaround</li></ul>
         <a class="btn btn-ghost" href="#contact" data-offer="Ongoing partner">Talk about a retainer</a>
       </div>
+      <div class="offer custom">
+        <div>
+          <h3>Custom project</h3>
+          <p style="color:var(--muted)">Something that does not fit a box? Tell me what you need and I will shape a scope and budget around it.</p>
+          <p class="price">Priced to your brief</p>
+        </div>
+        <ul><li>A mix of any services above</li><li>Scope built around your goals and budget</li><li>A clear written proposal before work starts</li></ul>
+        <a class="btn btn-ghost" href="#contact" data-offer="Custom project">Discuss your project</a>
+      </div>
     </div>
   </div>
 </section>
@@ -752,7 +807,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       <label>Your name<input id="f-name" name="name" autocomplete="name" required></label>
       <label>Organisation<input id="f-org" name="org" autocomplete="organization"></label>
       <label class="full">Email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
-      <label>What do you need?<select id="f-type" name="type"><option>Campaign</option><option>Report or data</option><option>Identity</option><option>Film and photography</option><option>Signage and interpretation</option><option>Digital</option><option>Not sure yet</option></select></label>
+      <label>What do you need?<select id="f-type" name="type"><option>Campaign</option><option>Report or data</option><option>Identity</option><option>Film and photography</option><option>Signage and interpretation</option><option>Digital</option><option>Custom project</option><option>Not sure yet</option></select></label>
       <label>Approximate budget<select id="f-budget" name="budget"><option>Not sure yet</option><option>Under £10k</option><option>£10k to £25k</option><option>£25k to £50k</option><option>£50k to £100k</option><option>Over £100k</option></select></label>
       <label class="full">Timeline<input id="f-when" name="when" placeholder="For example: launch in spring 2027"></label>
       <label class="full">About the project<textarea id="f-msg" name="msg" placeholder="The challenge, who you need to reach and any key dates"></textarea></label>
@@ -807,6 +862,37 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   });
   document.getElementById('copyMsg').addEventListener('click',function(){copyText(fbt.textContent,this);});
 
+
+  /* Showreel: five silent clips. Each clip plays once, then the reel moves to the next one. Visitors can swipe, use the arrows or dots, or pause. */
+  (function(){
+    var reel=document.getElementById('reel'),track=document.getElementById('reelTrack');
+    if(!reel||!track){return;}
+    var slides=[].slice.call(track.querySelectorAll('.reel-slide')),vids=slides.map(function(s){return s.querySelector('video');});
+    var dots=[].slice.call(reel.querySelectorAll('.reel-dot')),count=document.getElementById('reelCount'),toggle=document.getElementById('reelToggle');
+    var names=slides.map(function(s){return s.getAttribute('aria-label').replace(/^\d+ of \d+: /,'');});
+    var cur=-1,stopped=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+    function pad(n){return (n<10?'0':'')+n;}
+    function setToggle(){toggle.classList.toggle('paused',stopped);toggle.setAttribute('aria-label',stopped?'Play the showreel':'Pause the showreel');}
+    function activate(i){
+      if(i===cur){return;}cur=i;
+      vids.forEach(function(v,k){if(k!==i){v.pause();try{v.currentTime=0;}catch(e){}}});
+      [i,(i+1)%vids.length].forEach(function(k){if(vids[k].preload!=='auto'){vids[k].preload='auto';vids[k].load();}});
+      dots.forEach(function(d,k){d.setAttribute('aria-current',k===i?'true':'false');});
+      count.innerHTML=pad(i+1)+' / '+pad(vids.length)+'<span class="rc-name"> · '+names[i]+'</span>';
+      if(!stopped){var pr=vids[i].play();if(pr&&pr.catch){pr.catch(function(){});}}
+    }
+    function go(i){i=(i+vids.length)%vids.length;track.scrollTo({left:i*track.clientWidth,behavior:'smooth'});activateSoon(i);}
+    var t;function activateSoon(i){clearTimeout(t);t=setTimeout(function(){activate(i);},350);}
+    track.addEventListener('scroll',function(){activateSoon(Math.round(track.scrollLeft/Math.max(1,track.clientWidth)));},{passive:true});
+    vids.forEach(function(v,k){v.addEventListener('ended',function(){if(k===cur&&!stopped){go(k+1);}});});
+    dots.forEach(function(d,k){d.addEventListener('click',function(){go(k);});});
+    reel.querySelector('.reel-arrow.prev').addEventListener('click',function(){go(cur-1);});
+    reel.querySelector('.reel-arrow.next').addEventListener('click',function(){go(cur+1);});
+    toggle.addEventListener('click',function(){stopped=!stopped;setToggle();if(stopped){vids[cur].pause();}else{var pr=vids[cur].play();if(pr&&pr.catch){pr.catch(function(){});}}});
+    window.addEventListener('resize',function(){track.style.scrollBehavior='auto';track.scrollLeft=cur*track.clientWidth;track.style.scrollBehavior='';});
+    document.addEventListener('visibilitychange',function(){if(document.hidden){vids[cur].pause();}else if(!stopped){vids[cur].play().catch(function(){});}});
+    setToggle();activate(0);
+  })();
   /* Videos: on your own website the film plays in the page; on preview pages that block embeds, the link opens YouTube instead. */
   var canEmbed=!/claude/i.test(location.hostname);
   document.querySelectorAll('.video[data-vimeo]').forEach(function(v){
@@ -823,6 +909,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
       f.allowFullscreen=true;
       v.querySelectorAll('.play,.vlabel').forEach(function(n){n.remove();});
       v.appendChild(f);
+      var hm=v.closest('.hero-media');if(hm){hm.classList.add('playing');}
     },{once:true});
   });
   document.querySelectorAll('.video[data-yt]').forEach(function(v){
