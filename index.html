@@ -259,17 +259,24 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--kingfisher);outl
 .band .testimonial{border-top-color:var(--band-line)}
 .band .testimonial figcaption{color:var(--band-muted)}
 @media (max-width:600px){.testimonial{grid-template-columns:minmax(0,1fr);gap:12px}.testimonial > svg{margin-top:0}}
-.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(200px,24vw,320px);grid-auto-flow:dense;gap:14px}
-.g-item{margin:0;position:relative;border-radius:14px;overflow:hidden;background:#26302B;min-width:0}
+.gallery{--gh:clamp(170px,19vw,250px);display:grid;grid-auto-flow:column dense;grid-template-rows:repeat(2,var(--gh));grid-auto-columns:var(--gh);gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain;padding-bottom:2px}
+.gallery::-webkit-scrollbar{display:none}
+.gallery:focus-visible{outline:2px solid var(--kingfisher);outline-offset:6px;border-radius:14px}
+.g-item{margin:0;position:relative;border-radius:14px;overflow:hidden;background:#26302B;min-width:0;scroll-snap-align:start}
 .g-item.big{grid-column:span 2;grid-row:span 2}
 .g-item.tall{grid-row:span 2}
 .g-item.wide{grid-column:span 2}
+.g-nav{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.g-arrow{width:44px;height:44px;border-radius:50%;border:1px solid var(--band-line);background:transparent;color:var(--band-fg);display:grid;place-items:center;cursor:pointer;padding:0;transition:background .2s ease,opacity .2s ease}
+.g-arrow:hover{background:rgba(237,239,233,.08)}
+.g-arrow[disabled]{opacity:.35;cursor:default}
+.g-arrow svg{width:22px;height:22px}
 .g-item img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .4s ease}
 .g-item video{width:100%;height:100%;object-fit:cover;display:block}
 .g-item:hover img{transform:scale(1.03)}
 .g-ph{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:10px;border:1.5px dashed #46544C;border-radius:14px;color:#6E7B73;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
 .g-ph svg{width:44px;height:34px;color:#4C5A52;--beam:#4C5A52}
-.g-item figcaption{position:absolute;left:12px;bottom:12px;right:12px;font-size:.78rem;line-height:1.35;color:#EDEFE9;background:rgba(28,36,32,.72);padding:6px 10px;border-radius:6px;width:max-content;max-width:min(70%,360px)}
+.g-item figcaption{position:absolute;left:12px;bottom:12px;right:12px;font-size:.78rem;line-height:1.35;color:#EDEFE9;background:rgba(28,36,32,.72);padding:6px 10px;border-radius:6px;width:max-content;max-width:min(calc(100% - 24px),360px)}
 .g-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;border:0;background:var(--kingfisher);color:#1C2420;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px -8px rgba(0,0,0,.5);transition:transform .15s ease}
 .g-play svg{width:30px;height:30px;margin-left:4px}
 .g-play:hover{transform:translate(-50%,-50%) scale(1.06)}
@@ -280,8 +287,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--kingfisher);outl
 .lightbox img{max-width:min(1200px,100%);max-height:80vh;border-radius:10px}
 .lightbox p{color:#B9C1BA;font-size:.95rem;margin:0}
 .lb-close{position:absolute;top:max(16px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));background:none;border:1px solid #46544C;color:#EDEFE9;border-radius:999px;padding:8px 16px;font:500 .9rem var(--f-sans);cursor:pointer}
-@media (max-width:760px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:210px}}
-@media (max-width:480px){.gallery{grid-template-columns:minmax(0,1fr);grid-auto-rows:240px}.g-item.big{grid-column:auto;grid-row:span 1}.g-item.wide{grid-column:auto}}
+@media (max-width:760px){.gallery{--gh:150px;gap:10px}}
 footer{background:var(--band);color:var(--band-muted);border-top:1px solid var(--band-line);padding-block:32px;font-size:.88rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
 
@@ -638,7 +644,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <span class="meta">Environmental activism</span>
           <h3>Winds of Change</h3>
           <p class="clients">Specialized · Patagonia</p>
-          <p>A piece of environmental activism, supported by Specialized and Patagonia, that took a film on tour and turned viewers into supporters of Scotland’s trails.</p>
+          <p>A piece of environmental activism, supported by Specialized and Patagonia, with extensive help from Prof Hayley Fowler and Newcastle University. The film went on tour and turned viewers into advocates for Scotland’s landscapes in the face of increasingly extreme weather.</p>
           <div class="kpis">
             <div class="kpi"><b>£37k</b><small>Raised for Scottish trails</small></div>
             <div class="kpi"><b>109k</b><small>Views across YouTube and social</small></div>
@@ -646,14 +652,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
           <details class="more">
             <summary>Project details</summary>
             <div class="more-body">
-              <div><h4>The project</h4><p>Winds of Change is a piece of environmental activism, supported by Specialized and Patagonia. The aim was to move people from watching a film to taking action for the trails they ride.</p></div>
+              <div><h4>The project</h4><p>Winds of Change is a piece of environmental activism, supported by Specialized and Patagonia, with extensive help from Prof Hayley Fowler and Newcastle University. The aim was to move people from watching a film to taking action for the trails they ride.</p></div>
               <div><h4>What we did</h4><p>I managed the production and the budget, created the illustration and took the film on tour. Screenings with professional athletes brought riders together, and community engagement and fundraising at each event raised £37k for Scottish trails.</p></div>
               <div class="stats">
                 <div class="stat"><b>£37k</b><small>Raised for Scottish trails</small></div>
                 <div class="stat"><b>109k</b><small>Views across YouTube and social</small></div>
                 <div class="stat"><b>Film tour</b><small>Activations with professional athletes</small></div>
               </div>
-              <p class="credits">Supported by: Specialized, Patagonia · Oxbow: production management, budget management, illustration, film tour, community engagement and fundraising</p>
+              <p class="credits">Supported by: Specialized, Patagonia, with extensive help from Prof Hayley Fowler and Newcastle University · Oxbow: production management, budget management, illustration, film tour, community engagement and fundraising</p>
             </div>
           </details>
         </div>
@@ -673,47 +679,110 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   <div class="wrap">
     <div class="head">
       <span class="eyebrow">Gallery</span>
-      <h2>Behind the films and campaigns</h2>
+      <h2>Behind my work and campaigns</h2>
       <p class="lede">Stills, screenshots and moments from the field.</p>
     </div>
-    <div class="gallery">
-      <figure class="g-item big">
-        <video class="g-video g-click" muted playsinline preload="metadata" poster="media/gallery-hero.jpg" aria-label="Animated map: the salmon migration from Wooler Water to Greenland">
-          <source src="media/gallery-hero.mp4" type="video/mp4">
-        </video>
-        <button type="button" class="g-play" aria-label="Play the salmon migration animation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
-        <figcaption>Conceptual illustration and animation highlighting the journey of Atlantic salmon</figcaption>
-      </figure>
-      <figure class="g-item tall">
-        <img src="media/gallery-waterfall.jpg" alt="Tommy filming with a camera on a tripod beside a waterfall" loading="lazy" style="object-position:16% 60%">
-        <figcaption>Managing resources on location and keeping every deliverable consistent</figcaption>
-      </figure>
-      <figure class="g-item ">
-        <video class="g-video g-click" muted playsinline preload="metadata" poster="media/gallery-fpv.jpg" aria-label="FPV drone footage flying low through mossy woodland along a stream">
-          <source src="media/gallery-fpv.mp4" type="video/mp4">
-        </video>
-        <button type="button" class="g-play" aria-label="Play the FPV drone clip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
-        <figcaption>FPV drone filming, low through ancient woodland</figcaption>
-      </figure>
-      <figure class="g-item ">
-        <img src="media/gallery-highland.jpg" alt="Close-up of a Highland cow’s horns and russet coat beside a lichen-covered branch" loading="lazy" style="object-position:40% 40%">
-        <figcaption>Telling the stories of wilder landscapes</figcaption>
-      </figure>
-      <figure class="g-item wide">
-        <video class="g-video g-click" playsinline preload="metadata" poster="media/gallery-farming.jpg" style="object-position:40% 30%" aria-label="Interview clip: Farming optimally, not maximally">
-          <source src="media/gallery-farming.mp4" type="video/mp4">
-        </video>
-        <button type="button" class="g-play" aria-label="Play the interview clip with sound"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
-        <figcaption>Farming optimally, not maximally</figcaption>
-      </figure>
-      <figure class="g-item ">
-        <img src="media/gallery-oh-poop.jpg" alt="Engraving-style illustration of a trout swimming through sewage in a river, thinking “Oh poop!”" loading="lazy" style="object-position:78% 50%">
-        <figcaption>Illustration: making water quality memorable</figcaption>
-      </figure>
-      <figure class="g-item ">
-        <img src="media/gallery-farmer.jpg" alt="Smiling farmer in work clothes standing in a hillside pasture with cattle grazing behind" loading="lazy" style="object-position:30% 35%">
-        <figcaption>Using personality to increase sales for a farm’s direct-to-consumer business</figcaption>
-      </figure>
+    <div class="gallery-wrap">
+      <div class="gallery" id="gallery-track" tabindex="0" aria-label="Gallery: scroll sideways to see more">
+        <figure class="g-item big">
+          <video class="g-video g-click" muted playsinline preload="metadata" poster="media/gallery-hero.jpg" aria-label="Animated map: the salmon migration from Wooler Water to Greenland">
+            <source src="media/gallery-hero.mp4" type="video/mp4">
+          </video>
+          <button type="button" class="g-play" aria-label="Play the salmon migration animation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+          <figcaption>Conceptual illustration and animation highlighting the journey of Atlantic salmon</figcaption>
+        </figure>
+        <figure class="g-item tall">
+          <img src="media/gallery-waterfall.jpg" alt="Tommy filming with a camera on a tripod beside a waterfall" loading="lazy" style="object-position:16% 60%">
+          <figcaption>Managing resources on location and keeping every deliverable consistent</figcaption>
+        </figure>
+        <figure class="g-item wide">
+          <img src="media/gallery-g11.jpg" alt="Camera operator with a gimbal rig walking through tall grass at golden hour, hills behind" loading="lazy" style="object-position:70% 45%">
+          <figcaption>I have extensive experience managing teams on complex productions</figcaption>
+        </figure>
+        <figure class="g-item ">
+          <video class="g-video g-click" muted playsinline preload="metadata" poster="media/gallery-fpv.jpg" aria-label="FPV drone footage flying low through mossy woodland along a stream">
+            <source src="media/gallery-fpv.mp4" type="video/mp4">
+          </video>
+          <button type="button" class="g-play" aria-label="Play the FPV drone clip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+          <figcaption>FPV drone filming, low through ancient woodland</figcaption>
+        </figure>
+        <figure class="g-item ">
+          <img src="media/gallery-highland.jpg" alt="Close-up of a Highland cow’s horns and russet coat beside a lichen-covered branch" loading="lazy" style="object-position:40% 40%">
+          <figcaption>Telling the stories of wilder landscapes</figcaption>
+        </figure>
+        <figure class="g-item tall">
+          <img src="media/gallery-g05.jpg" alt="View down onto a Highland loch, a village and snow-capped mountains" loading="lazy" style="object-position:50% 50%">
+          <figcaption>Comfortable working in harsh environments to make sure the story gets told effectively</figcaption>
+        </figure>
+        <figure class="g-item wide">
+          <img src="media/gallery-g04.jpg" alt="Interview portrait of a smiling woman in a striped shirt against a stone wall" loading="lazy" style="object-position:40% 35%">
+          <figcaption>Interview portraits, lit for warmth</figcaption>
+        </figure>
+        <figure class="g-item wide">
+          <img src="media/gallery-g14.jpg" alt="Hand-drawn storyboard with four frames: city sunrise, a silhouette, a roundabout and bike posters" loading="lazy">
+          <figcaption>Storyboarding before the shoot</figcaption>
+        </figure>
+        <figure class="g-item tall">
+          <img src="media/gallery-g10.jpg" alt="Film poster for Winds of Change: a rider with a bike stands among storm-felled trees" loading="lazy" style="object-position:50% 30%">
+          <figcaption>Film poster: Winds of Change</figcaption>
+        </figure>
+        <figure class="g-item big">
+          <img src="media/gallery-g03.jpg" alt="Night scene: a woodland lit green and orange, with a small stage glowing under the trees" loading="lazy">
+          <figcaption>Lighting a woodland for a night-time event</figcaption>
+        </figure>
+        <figure class="g-item ">
+          <img src="media/gallery-g01.jpg" alt="Three ponies on heather moorland, one looking back at the camera, fields in the valley below" loading="lazy" style="object-position:55% 50%">
+          <figcaption>Ponies on the heather moorland</figcaption>
+        </figure>
+        <figure class="g-item ">
+          <img src="media/gallery-oh-poop.jpg" alt="Engraving-style illustration of a trout swimming through sewage in a river, thinking “Oh poop!”" loading="lazy" style="object-position:78% 50%">
+          <figcaption>Illustration: making water quality memorable</figcaption>
+        </figure>
+        <figure class="g-item tall">
+          <img src="media/gallery-g13.jpg" alt="Camera operator in a conifer forest holding two camera rigs and grinning" loading="lazy" style="object-position:50% 35%">
+          <figcaption>Two camera rigs, one happy crew member</figcaption>
+        </figure>
+        <figure class="g-item wide">
+          <img src="media/gallery-g08.jpg" alt="Interview with a bearded man in a blue fleece in front of full bookshelves" loading="lazy" style="object-position:65% 40%">
+          <figcaption>Interview set-up in a contributor’s home</figcaption>
+        </figure>
+        <figure class="g-item wide">
+          <img src="media/gallery-g06.jpg" alt="Production base under a gazebo in a field: tables, cases, cameras and cables, autumn trees behind" loading="lazy">
+          <figcaption>Base camp for a location shoot</figcaption>
+        </figure>
+        <figure class="g-item big">
+          <img src="media/gallery-g09.jpg" alt="Long exposure at dusk: light trails along a mountain trail beside a glowing tent and bikes" loading="lazy">
+          <figcaption>Long exposure: light trails over a mountain camp</figcaption>
+        </figure>
+        <figure class="g-item tall">
+          <img src="media/gallery-g12.jpg" alt="Black and white photo of a white pony grazing below a flat-topped island cliff" loading="lazy" style="object-position:50% 70%">
+          <figcaption>A white pony below the island cliffs</figcaption>
+        </figure>
+        <figure class="g-item ">
+          <img src="media/gallery-farmer.jpg" alt="Smiling farmer in work clothes standing in a hillside pasture with cattle grazing behind" loading="lazy" style="object-position:30% 35%">
+          <figcaption>Using personality to increase sales for a farm’s direct-to-consumer business</figcaption>
+        </figure>
+        <figure class="g-item wide">
+          <img src="media/gallery-g07.jpg" alt="A person sits on a grassy clifftop above rocky coves and open sea under a big sky" loading="lazy" style="object-position:60% 50%">
+          <figcaption>Scouting locations on the coast</figcaption>
+        </figure>
+        <figure class="g-item wide">
+          <img src="media/gallery-g02.jpg" alt="Layered mountain ridges in soft evening light" loading="lazy">
+          <figcaption>Layered ridgelines in evening light</figcaption>
+        </figure>
+        <figure class="g-item wide">
+          <img src="media/gallery-g15.jpg" alt="Event site at dusk: a large white marquee, hay bales and people in a field below hills" loading="lazy" style="object-position:50% 60%">
+          <figcaption>Event production: a festival site at dusk</figcaption>
+        </figure>
+        <figure class="g-item tall">
+          <img src="media/gallery-g16.jpg" alt="Podcast room with two microphones on boom arms, headphones and a screen showing a cycling route" loading="lazy" style="object-position:50% 45%">
+          <figcaption>Podcast recording set-up</figcaption>
+        </figure>
+      </div>
+      <div class="g-nav">
+        <button type="button" class="g-arrow" data-dir="-1" aria-label="Scroll the gallery left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button type="button" class="g-arrow" data-dir="1" aria-label="Scroll the gallery right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
     </div>
   </div>
 </section>
@@ -894,6 +963,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   document.getElementById('copyMsg').addEventListener('click',function(){copyText(fbt.textContent,this);});
 
 
+  /* Gallery: one band that scrolls sideways, so the section keeps the same height. */
+  (function(){
+    var t=document.getElementById('gallery-track');if(!t){return;}
+    var btns=[].slice.call(document.querySelectorAll('.g-arrow'));
+    function upd(){var max=t.scrollWidth-t.clientWidth-2;btns.forEach(function(b){var d=+b.getAttribute('data-dir');b.disabled=d<0?t.scrollLeft<=2:t.scrollLeft>=max;});}
+    btns.forEach(function(b){b.addEventListener('click',function(){t.scrollBy({left:+b.getAttribute('data-dir')*t.clientWidth*0.8,behavior:'smooth'});});});
+    t.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);
+    t.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();t.scrollBy({left:(e.key==='ArrowRight'?1:-1)*t.clientWidth*0.6,behavior:'smooth'});}});
+    upd();
+  })();
   /* Showreel: five silent clips. Each clip plays once, then the reel moves to the next one. Visitors can swipe, use the arrows or dots, or pause. */
   (function(){
     var reel=document.getElementById('reel'),track=document.getElementById('reelTrack');
